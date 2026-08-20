@@ -14,8 +14,14 @@ router.get('/', (req, res) => {
 
 // <--- POST ROUTE --->
 router.post('/', auth, (req, res) => {
+  const name = typeof req.body.name === 'string' ? req.body.name.trim() : '';
+
+  if (!name) {
+    return res.status(400).json({ msg: 'Please enter an item name' });
+  }
+
   const newItem = new Item({
-    name: req.body.name,
+    name,
   });
 
   newItem.save().then((item) => res.json(item));
@@ -24,9 +30,15 @@ router.post('/', auth, (req, res) => {
 // <--- DELETE ROUTE BY IDs --->
 router.delete('/:id', auth, (req, res) => {
   Item.findById(req.params.id)
-    .then((item) =>
-      item.remove().then(() => res.json({ success: 'Item removed' }))
-    )
+    .then((item) => {
+      if (!item) {
+        return res.status(404).json({ unsuccessful: 'Item not found' });
+      }
+
+      return item
+        .deleteOne()
+        .then(() => res.json({ success: 'Item removed' }));
+    })
     .catch((err) => res.status(404).json({ unsuccessful: 'Item not found' }));
 });
 

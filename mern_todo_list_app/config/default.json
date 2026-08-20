@@ -1,4 +1,4 @@
 {
-  "mongoURI": "place your mongoURI here",
-  "jwtSecret": "any jwtSecret can be entered"
+  "mongoURI": "mongodb://127.0.0.1:27017/mern_todo_list_app_fixed_original",
+  "jwtSecret": "local-dev-jwt-secret-change-for-production"
 }

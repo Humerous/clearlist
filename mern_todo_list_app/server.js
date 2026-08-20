@@ -11,14 +11,10 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 //<--- DB CONFIG --->
-const db = config.get('mongoURI');
+const db = process.env.MONGO_URI || config.get('mongoURI');
 
 //<--- ATLAS_MONGO_URI IS FOR THE CLOUD DATABASE - stored in a .env file --->//
-mongoose.connect(db, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(db);
 
 const connection = mongoose.connection;
 connection.once('open', () => {
@@ -31,7 +27,7 @@ app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
 
 //<--- SERVE STATIC ASSERTS IF IN PRODUCTION --->
-if (process.env.NODE_EVN === 'production') {
+if (process.env.NODE_ENV === 'production') {
   //<--- SET STATIC FOLDER --->
   app.use(express.static('client/build'));
 
@@ -41,7 +37,11 @@ if (process.env.NODE_EVN === 'production') {
 }
 
 //<--- PORT LISTENING ON PORT 5000 --->//
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5050;
+connection.on('error', (error) => {
+  console.error('MongoDB connection failed:', error.message);
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });

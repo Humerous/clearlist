@@ -55,7 +55,6 @@ You're sections headers will be used to reference location of destination.
 ### GET Routes
 
 - visit http://localhost: I’m 5000
-
   - /add/
   - /add/:id
 
