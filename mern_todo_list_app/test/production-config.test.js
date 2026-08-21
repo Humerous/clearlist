@@ -2,12 +2,12 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { spawnSync } = require('node:child_process');
 
-test('production configuration reads secrets from environment variables', () => {
+test('production configuration reads secrets directly from environment variables', () => {
   const script = `
-    const config = require('config');
+    const runtime = require('./runtime-config');
     process.stdout.write(JSON.stringify({
-      mongoURI: config.get('mongoURI'),
-      jwtSecret: config.get('jwtSecret')
+      mongoURI: runtime.mongoURI,
+      jwtSecret: runtime.jwtSecret
     }));
   `;
 
@@ -26,8 +26,15 @@ test('production configuration reads secrets from environment variables', () => 
 
   const values = JSON.parse(result.stdout);
 
-  assert.equal(values.mongoURI, 'mongodb://example.invalid/clearlist');
-  assert.equal(values.jwtSecret, 'production-test-secret');
+  assert.equal(
+    values.mongoURI,
+    'mongodb://example.invalid/clearlist'
+  );
+
+  assert.equal(
+    values.jwtSecret,
+    'production-test-secret'
+  );
 });
 
 test('production server refuses to start without required secrets', () => {
@@ -43,6 +50,7 @@ test('production server refuses to start without required secrets', () => {
   });
 
   assert.notEqual(result.status, 0);
+
   assert.match(
     result.stderr,
     /Missing required production environment variables/

@@ -1,20 +1,23 @@
-const config = require('config');
 const jwt = require('jsonwebtoken');
+const { jwtSecret } = require('../runtime-config');
 
 function auth(req, res, next) {
   const token = req.header('x-auth-token');
 
-  //CHECK FOR TOKEN
-  if (!token)
-    return res.status(401).json({ msg: 'No token, authorization denied' });
+  if (!token) {
+    return res.status(401).json({
+      msg: 'No token, authorization denied',
+    });
+  }
 
   try {
-    //VERFIY TOKEN
-    const decoded = jwt.verify(token, config.get('jwtSecret'));
+    const decoded = jwt.verify(token, jwtSecret);
     req.user = decoded;
     next();
-  } catch (e) {
-    res.status(401).json({ msg: 'Token is not valid' });
+  } catch (error) {
+    res.status(401).json({
+      msg: 'Token is not valid',
+    });
   }
 }
 

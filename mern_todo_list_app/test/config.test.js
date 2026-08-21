@@ -1,15 +1,23 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const config = require('config');
+
+const {
+  mongoURI,
+  jwtSecret,
+  isProduction,
+} = require('../runtime-config');
 
 test('uses a local database by default', () => {
-  assert.match(config.get('mongoURI'), /^mongodb:\/\/127\.0\.0\.1:/);
+  if (!isProduction) {
+    assert.match(
+      mongoURI,
+      /^mongodb:\/\/127\.0\.0\.1:/
+    );
+  }
 });
 
-test('supports environment-based production secrets', () => {
-  assert.equal(
-    config.util.getEnv('NODE_ENV'),
-    process.env.NODE_ENV || 'development'
-  );
-  assert.ok(config.get('jwtSecret'));
+test('provides a local JWT secret outside production', () => {
+  if (!isProduction) {
+    assert.ok(jwtSecret);
+  }
 });
