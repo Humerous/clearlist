@@ -1,114 +1,126 @@
-A simple MERN Todo List app which uses CRUD tools with JWT authentication.
+# Clearlist
 
-### Table of Contents
+**Focused task management without the noise.**
 
-You're sections headers will be used to reference location of destination.
+Clearlist is a modern full-stack task application rebuilt from an earlier MERN todo project.
 
-- [Features](#features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [GET Routes](#getroutes)
-- [Beyond GET Routes](#beyondgetroutes)
-- [Postman](#postman)
-- [References](#references)
-- [License](#license)
-- [Author Info](#author-info)
+The original application was first recovered and preserved in its last known-working form, then secured, modernised and rebuilt while preserving the truthful progression of the original project.
+
+## Project Evolution
+
+Original MERN learning project → recovered and verified → working legacy baseline preserved → dependencies modernised → authentication and data security hardened → frontend rebuilt as Clearlist → responsive and accessibility QA → production-ready release.
 
 ## Features
 
-- Node js
-- Express js
-- React js
+- User registration
+- Secure login and logout
+- Private authenticated task workspace
+- Create and delete tasks
+- Persistent MongoDB storage
+- Account-owned task data
+- User-isolated task retrieval and deletion
+- Responsive desktop and mobile interface
+- Custom Clearlist identity and navigation
+- Accessible forms, labels and interaction states
+
+## Modern Stack
+
+### Frontend
+
+- React 19
+- Vite 8
+- Redux Toolkit
+- React Redux
+- Axios
+- Vitest
+- Testing Library
+- Bricolage Grotesque
+- Manrope
+
+### Backend
+
+- Node.js
+- Express
 - MongoDB
-- JWT auth
+- Mongoose
+- JSON Web Tokens
+- bcryptjs
 
-## Requirements
+## Security Modernisation
 
-- [node & npm](https://nodejs.org/en/)
-- [mongo](https://account.mongodb.com/account/login)
+The original application authenticated users but did not associate individual tasks with their owners.
 
-## Installation
+Clearlist corrects this by:
 
-- `01.\DOWNLOAD THE ZIP REPOSITORY`
-- `02.\_UNZIP`
-- `03.\_CD INTO PROJECT`
-- `04.\_NPM INSTALL`
-- `05.\_CD INTO PROJECT IN CLIENT FOLDER`
-- `06.\_NPM INSTALL`
-- `07.\CD OUT AND BACK INTO ROOT FOLDER`
-- `08.\_NPM RUN DEV - USING CONCURRENTLY TO RUN BOTH SERVERS IN ONE COMMAND`
-- `10.\_ENJOY!`
+- assigning each task to the authenticated user
+- restricting task retrieval to that user
+- restricting deletion to that user
+- protecting task routes with authentication
+- clearing account-specific task state after logout or authentication failure
+- using environment variables for production MongoDB and JWT configuration
+- refusing production startup when required secrets are missing
 
-### GET Routes
+## Quality Assurance
 
-- visit http://localhost: I’m 5000
+The modernised application has passed:
 
-  - /add/
-  - /add/:id
+- Backend automated tests
+- Client automated tests
+- Functional QA
+- Registration and authentication QA
+- Task create/delete QA
+- Persistence QA
+- User-isolation QA
+- Responsive desktop/mobile QA
+- Mobile navigation QA
+- Production build verification
+- Lighthouse accessibility audit — **100/100**
 
-### Beyond GET Routes
+WCAG 2.2 AA was used as the accessibility baseline for the public interface.
 
-#### CURL
+## Local Development
 
-- Create a new car with:
-  - `curl -X POST -H "Content-Type:application/json" http://localhost:5000/`
-  - Update a car in list with:
-  - `curl -X PUT -H "Content-Type:application/json" http://localhost:5000/add`
-- Delete a car from collection with:
-  - `curl -X DELETE -H "Content-Type:application/json" http://localhost:5000/:id`
+1. Install backend dependencies with `npm install`.
+2. Install client dependencies with `npm install --prefix client`.
+3. Copy `.env.example` to `.env`.
+4. Configure `MONGO_URI`, `JWT_SECRET` and `PORT=5050`.
+5. Start Clearlist with `npm run dev`.
 
-#### Postman
+Development services:
 
-- Install [Postman](https://www.getpostman.com/apps) to interact with REST API
-- Create a message with:
-  - URL: http://localhost:5000/api
-  - Method: POST
-  - Body: raw + JSON (application/json)
-  - Update a message with:
-  - URL: http://localhost:5000/:id`
-  - Method: PUT
-- Delete a message with:
-  - URL: http://localhost:5000/:id`
-  - Method: DELETE
+- Frontend: `http://localhost:3000`
+- Backend: `http://localhost:5050`
 
-## References
+## Production Build
 
-Hyperion Development Bootcamp
+Run `npm run build`.
 
-[Back To The Top](#read-me-template)
+Vite generates the production client in `client/dist`.
 
----
+## Production Deployment
+
+**Live application:** deployment URL will be added after final production verification.
+
+Production requires:
+
+- `MONGO_URI`
+- `JWT_SECRET`
+- `NODE_ENV=production`
+
+## Historical Preservation
+
+The original project history has not been overwritten.
+
+A known-working legacy baseline is preserved in the `legacy/working-baseline-2026-08-14` branch so the progression from the earlier MERN implementation to Clearlist remains visible and verifiable.
+
+## Created By
+
+**Chameleon Unicode Studios**
+
+Cape Town, South Africa · 2026
+
+Legacy recovery · Security hardening · Full-stack modernisation
 
 ## License
 
-MIT License
-
-Copyright (c) [2022][david k miller]
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-[Back To The Top](#read-me-template)
-
----
-
-## Author Info
-
-- Twitter - [@DavidMillerster](https://twitter.com/DavidMillerster)
-
-[Back To The Top](#read-me-template)
+MIT

@@ -1,45 +1,56 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
-
-// <--- ITEM MODEL IMPORTED --->
 const Item = require('../../models/Item');
 
-// <--- GET ROUTE --->
-router.get('/', (req, res) => {
-  Item.find()
-    .sort({ date: -1 })
-    .then((items) => res.json(items));
+router.get('/', auth, async (req, res) => {
+  try {
+    const items = await Item.find({ user: req.user.id }).sort({ date: -1 });
+    res.json(items);
+  } catch (error) {
+    res.status(500).json({ msg: 'Unable to load tasks' });
+  }
 });
 
-// <--- POST ROUTE --->
-router.post('/', auth, (req, res) => {
+router.post('/', auth, async (req, res) => {
   const name = typeof req.body.name === 'string' ? req.body.name.trim() : '';
 
   if (!name) {
-    return res.status(400).json({ msg: 'Please enter an item name' });
+    return res.status(400).json({ msg: 'Please enter a task name' });
   }
 
-  const newItem = new Item({
-    name,
-  });
+  try {
+    const item = await Item.create({
+      user: req.user.id,
+      name,
+    });
 
-  newItem.save().then((item) => res.json(item));
+    res.status(201).json(item);
+  } catch (error) {
+    res.status(500).json({ msg: 'Unable to create task' });
+  }
 });
 
-// <--- DELETE ROUTE BY IDs --->
-router.delete('/:id', auth, (req, res) => {
-  Item.findById(req.params.id)
-    .then((item) => {
-      if (!item) {
-        return res.status(404).json({ unsuccessful: 'Item not found' });
-      }
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    const item = await Item.findOne({
+      _id: req.params.id,
+      user: req.user.id,
+    });
 
-      return item
-        .deleteOne()
-        .then(() => res.json({ success: 'Item removed' }));
-    })
-    .catch((err) => res.status(404).json({ unsuccessful: 'Item not found' }));
+    if (!item) {
+      return res.status(404).json({ msg: 'Task not found' });
+    }
+
+    await item.deleteOne();
+    res.json({ success: true });
+  } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(404).json({ msg: 'Task not found' });
+    }
+
+    res.status(500).json({ msg: 'Unable to delete task' });
+  }
 });
 
 module.exports = router;
