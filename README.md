@@ -99,7 +99,7 @@ Vite generates the production client in `client/dist`.
 
 ## Production Deployment
 
-**Live application:** deployment URL will be added after final production verification.
+**Live application:** https://clearlist-chameleon.vercel.app
 
 Production requires:
 
