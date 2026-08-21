@@ -16,29 +16,30 @@ app.use(morgan('dev'));
 
 assertProductionConfig();
 
-mongoose.connect(mongoURI);
-
-const connection = mongoose.connection;
-
-connection.once('open', () => {
-  console.log('MongoDB database connection established successfully');
-});
-
-connection.on('error', (error) => {
-  console.error('MongoDB connection failed:', error.message);
-});
+mongoose
+  .connect(mongoURI, {
+    serverSelectionTimeoutMS: 10000,
+  })
+  .then(() => {
+    console.log('MongoDB database connection established successfully');
+  })
+  .catch((error) => {
+    console.error('MongoDB connection failed:', error.message);
+  });
 
 app.use('/api/items', require('./routes/api/items'));
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
 
-if (isProduction && !process.env.VERCEL) {
-  app.use(express.static('client/dist'));
+if (isProduction) {
+  const staticDirectory = process.env.VERCEL
+    ? path.join(__dirname, 'public')
+    : path.join(__dirname, 'client', 'dist');
+
+  app.use(express.static(staticDirectory));
 
   app.get('*', (req, res) => {
-    res.sendFile(
-      path.resolve(__dirname, 'client', 'dist', 'index.html')
-    );
+    res.sendFile(path.join(staticDirectory, 'index.html'));
   });
 }
 

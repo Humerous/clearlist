@@ -2,11 +2,5 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "express",
   "installCommand": "npm install && npm install --prefix client",
-  "buildCommand": "npm run build && rm -rf public && mkdir -p public && cp -R client/dist/. public/",
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/index.html"
-    }
-  ]
+  "buildCommand": "npm run build && rm -rf public && mkdir -p public && cp -R client/dist/. public/"
 }
