@@ -99,7 +99,7 @@ Vite generates the production client in `client/dist`.
 
 ## Production Deployment
 
-**Live application:** https://clearlist-khaki.vercel.app
+**Live application:** https://clearlist-chameleon.vercel.app
 
 Production requires:
 
