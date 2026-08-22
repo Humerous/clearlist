@@ -181,10 +181,31 @@ function App() {
     };
   }, [mobileMenuOpen]);
 
-  const changeMode = (nextMode) => {
+  const changeMode = (nextMode, navigateToForm = false) => {
     dispatch(clearAuthError());
     setMode(nextMode);
     setMobileMenuOpen(false);
+
+    if (!navigateToForm) return;
+
+    window.setTimeout(() => {
+      const authCard = document.querySelector('.auth-card');
+
+      if (!authCard) return;
+
+      authCard.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+
+      const fieldName = nextMode === 'register' ? 'name' : 'email';
+
+      window.setTimeout(() => {
+        authCard.querySelector(`input[name="${fieldName}"]`)?.focus({
+          preventScroll: true,
+        });
+      }, 350);
+    }, 100);
   };
 
   const handleAuthSubmit = (event) => {
@@ -326,7 +347,7 @@ function App() {
                   <button
                     className="mobile-menu-action"
                     type="button"
-                    onClick={() => changeMode('login')}
+                    onClick={() => changeMode('login', true)}
                   >
                     <span className="menu-action-icon">○</span>
 
@@ -341,7 +362,7 @@ function App() {
                   <button
                     className="mobile-menu-action"
                     type="button"
-                    onClick={() => changeMode('register')}
+                    onClick={() => changeMode('register', true)}
                   >
                     <span className="menu-action-icon">＋</span>
 
