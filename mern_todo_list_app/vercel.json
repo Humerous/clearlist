@@ -1,6 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "express",
+  "alias": ["clearlist-chameleon.vercel.app"],
   "installCommand": "npm install && npm install --include=dev --prefix client",
   "buildCommand": "npm run build && rm -rf public && mkdir -p public && cp -R client/dist/. public/"
 }
