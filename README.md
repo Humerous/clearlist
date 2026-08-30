@@ -2,6 +2,8 @@
 
 **Focused task management without the noise.**
 
+[![Clearlist showcase](docs/assets/clearlist-showcase.svg)](https://clearlist-chameleon.vercel.app)
+
 Clearlist is a modern full-stack task application rebuilt from an earlier MERN todo project.
 
 The original application was first recovered and preserved in its last known-working form, then secured, modernised and rebuilt while preserving the truthful progression of the original project.
