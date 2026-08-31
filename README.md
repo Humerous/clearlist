@@ -4,9 +4,13 @@
 
 [![Clearlist showcase](docs/assets/clearlist-showcase-v2.webp)](https://clearlist-chameleon.vercel.app)
 
-Clearlist is a modern full-stack task application rebuilt from an earlier MERN todo project.
+A secure full-stack task application rebuilt from an earlier MERN project.
 
-The original application was first recovered and preserved in its last known-working form, then secured, modernised and rebuilt while preserving the truthful progression of the original project.
+**Live:** [clearlist-chameleon.vercel.app](https://clearlist-chameleon.vercel.app)  
+**Stack:** React · Vite · Redux Toolkit · Node.js · Express · MongoDB · JWT  
+**Status:** v2 · Complete / Live
+
+The original application was first recovered and preserved in its last known-working form, then secured, modernised and rebuilt while preserving the truthful progression of the project.
 
 ## Project Evolution
 
