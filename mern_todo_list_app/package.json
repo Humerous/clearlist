@@ -1,7 +1,7 @@
 {
-  "name": "mern_todo_list_app",
+  "name": "clearlist",
   "version": "2.0.0",
-  "description": "A todo-list-app with MERN-stack",
+  "description": "Secure full-stack task application with authentication and user-isolated data.",
   "main": "server.js",
   "scripts": {
     "test": "node --test --test-force-exit test/*.test.js",
